@@ -1,0 +1,9 @@
+com/example/donors/library/RecyclerViewAdapterWrapper.java
+ com.example.donors.library.RecyclerViewAdapterWrapper
+ com.example.donors.library.RecyclerViewAdapterWrapper$1
+com/example/donors/library/StatesRecyclerViewAdapter.java
+ com.example.donors.library.StatesRecyclerViewAdapter
+ com.example.donors.library.StatesRecyclerViewAdapter$SimpleViewHolder
+ com.example.donors.library.StatesRecyclerViewAdapter$State
+com/example/donors/BuildConfig.java
+ com.example.donors.BuildConfig
