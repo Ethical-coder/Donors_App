@@ -10,8 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.donors.MainActivity
 import com.example.donors.R
+import com.example.donors.constant.userInfo
 import com.example.donors.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 
 
 class LoginActivity : AppCompatActivity() {
@@ -43,11 +46,15 @@ class LoginActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(em, pwd)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                Toast.makeText(this, "Logged in successfully!", Toast.LENGTH_SHORT)
-                                    .show()
+                                val user : FirebaseUser=task.result!!.user!!
+                                userInfo.id=user.uid.toString();
+
+                                //Toast.makeText(this,"user id is "+userInfo.id,Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, "Logged in successfully! ", Toast.LENGTH_SHORT).show()
                                 Intent(this@LoginActivity , MainActivity::class.java).also {
                                     startActivity( it )
                                 }
+
                             } else {
                                 Toast.makeText(
                                     this,

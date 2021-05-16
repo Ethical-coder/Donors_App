@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.donors.activity.SecondActivity
 import com.example.donors.adapter.ActivityMainRVAdapter
 import com.example.donors.constant.DATA_RV_MAIN
+import com.example.donors.constant.userInfo
 import com.example.donors.databinding.ActivityMainBinding
 import com.example.donors.library.RecyclerItemClickListenr
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate( layoutInflater )
 
         setContentView( binding.root )
