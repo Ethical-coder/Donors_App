@@ -66,7 +66,6 @@ class SecondActivity : AppCompatActivity() {
 			val displayTextAlertDialog = MaterialAlertDialogBuilder( this ).apply {
 				setView( dialogLayout )
 				setPositiveButton("SEARCH"){ _ , _ ->
-					Log.d("BloodGroup" , bloodGroup.text.toString())
 					if( ! isChecked.isChecked )
 						Toast.makeText(this@SecondActivity , "Check !" , Toast.LENGTH_LONG).show()
 					else
