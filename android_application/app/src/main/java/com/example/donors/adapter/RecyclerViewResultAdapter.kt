@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.layout_result_rv.view.*
 
 class RecyclerViewResultAdapter : RecyclerView.Adapter< RecyclerViewResultAdapter.MainViewHolder >( ) {
 
-	lateinit var data : MutableList<String>
+	var data = mutableListOf<String>()
 
 	inner class MainViewHolder( itemView: View) : RecyclerView.ViewHolder( itemView )
 
@@ -24,11 +24,9 @@ class RecyclerViewResultAdapter : RecyclerView.Adapter< RecyclerViewResultAdapte
 		}
 	}
 
-	override fun getItemCount(): Int {
-		if( this::data.isInitialized ) return data.size
-		return 0
-	}
+	override fun getItemCount(): Int = data.size
 
+	// deprecated
 	fun set( _data : MutableList<String> ){
 		this.data = _data
 		notifyDataSetChanged()

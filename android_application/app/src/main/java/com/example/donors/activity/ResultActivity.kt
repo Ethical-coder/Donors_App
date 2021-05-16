@@ -2,6 +2,9 @@ package com.example.donors.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +13,8 @@ import com.example.donors.adapter.RecyclerViewResultAdapter
 import com.example.donors.databinding.ActivityResultBinding
 import com.example.donors.library.StatesRecyclerViewAdapter
 import com.example.donors.library.EndlessRecyclerViewScrollListener
-import kotlinx.coroutines.delay
+import com.example.donors.library.RecyclerItemClickListenr
+import kotlinx.coroutines.*
 
 
 class ResultActivity : AppCompatActivity() {
@@ -19,6 +23,7 @@ class ResultActivity : AppCompatActivity() {
 
 	lateinit var adapter : RecyclerViewResultAdapter
 	lateinit var scrollListener: EndlessRecyclerViewScrollListener
+	lateinit var statesRecyclerViewAdapter : StatesRecyclerViewAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -31,6 +36,7 @@ class ResultActivity : AppCompatActivity() {
 		var bloodGroup : String = intent.getStringExtra("BLOOD_GROUP") as String
 		var city : String = intent.getStringExtra("CITY") as String
 
+		// recycler view definitions
 		// state change adapter
 		val layoutManager = LinearLayoutManager(this)
 		binding.resultRvMain.layoutManager = layoutManager
@@ -39,7 +45,7 @@ class ResultActivity : AppCompatActivity() {
 		val errorView = layoutInflater.inflate( R.layout.layout_error , binding.resultRvMain , false )
 		val emptyView = layoutInflater.inflate( R.layout.layout_empty , binding.resultRvMain , false )
 
-		val statesRecyclerViewAdapter = StatesRecyclerViewAdapter( adapter , loadingView , emptyView , errorView )
+		statesRecyclerViewAdapter = StatesRecyclerViewAdapter( adapter , loadingView , emptyView , errorView )
 		binding.resultRvMain.adapter = statesRecyclerViewAdapter
 
 		// Default
@@ -48,29 +54,57 @@ class ResultActivity : AppCompatActivity() {
 		// scroll listener
 		scrollListener = object : EndlessRecyclerViewScrollListener( layoutManager ){
 			override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-				loadNextDataFromAPI( page , totalItemsCount )
+				loadNextData( page , totalItemsCount , type , bloodGroup , city)
 			}
 		}
 		binding.resultRvMain.addOnScrollListener( scrollListener )
 
-		val initialData : MutableList<String> = getDataFromAPI( bloodGroup , city )
-		if( initialData.isNotEmpty() ){
-			adapter.set( initialData )
-			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_NORMAL
-		}else {
-			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_EMPTY
-		}
+		binding.resultRvMain.addOnItemTouchListener(
+			RecyclerItemClickListenr(
+				this ,
+				binding.resultRvMain ,
+				object : RecyclerItemClickListenr.OnItemClickListener {
+					override fun onItemClick(view: View, position: Int) {
+						Toast.makeText(this@ResultActivity , "${adapter.data[position]} clicked", Toast.LENGTH_LONG).show()
+					}
+					override fun onItemLongClick(view: View?, position: Int) {
+						Toast.makeText(this@ResultActivity , "${adapter.data[position]} long clicked", Toast.LENGTH_LONG).show()
+					}
+				}
+			)
+		)
+
+		loadNextData(0 , 0 , type , bloodGroup , city ) // initial load of data
 
 	}
-	private var test = 10
-	private fun loadNextDataFromAPI(page: Int, totalItemsCount: Int) {
-		if( test > 20 ) return
-		adapter.add(IntRange(test , test + 10).map { it.toString() }.toMutableList())
-		test += 10
+
+	private var canLoadMore : Boolean = true
+	private val DELAY : Long = 0
+
+	private fun addDataToAdapter( data : MutableList<String> ){
+		adapter.add( data )
+		if( adapter.itemCount != 0 )
+			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_NORMAL
+		else
+			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_EMPTY
+	}
+
+	private fun loadNextDataFromAPI(page: Int, totalItemsCount: Int , type: String , bloodGroup: String, city: String) {
+		addDataToAdapter( getDataFromAPI( type, bloodGroup, city ) )
 		Toast.makeText(this ,"new content added !" , Toast.LENGTH_LONG).show()
 	}
 
-	private fun getDataFromAPI(bloodGroup: String, city: String): MutableList<String> {
-		return IntRange(1 , 10).map { it.toString() }.toMutableList()
+	private fun loadNextData( page: Int, totalItemsCount: Int , type : String , bloodGroup: String, city: String){
+		if( ! canLoadMore ) return
+		Handler( Looper.getMainLooper() ).postDelayed({
+			loadNextDataFromAPI( page , totalItemsCount , type , bloodGroup , city )
+		} , DELAY) // delayed activation
+	}
+
+	private fun getDataFromAPI(type: String, bloodGroup: String, city: String): MutableList<String> {
+		// Do magic here
+		val data = IntRange(1 , 10).map { it.toString() }.toMutableList()
+		if( data.isEmpty() ) canLoadMore = false
+		return data
 	}
 }
