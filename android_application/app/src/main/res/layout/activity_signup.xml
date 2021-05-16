@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity">
+    tools:context=".activity.LoginActivity"
+    android:orientation="vertical">
 
 
     <TextView
@@ -16,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="31dp"
         android:layout_marginLeft="31dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="120dp"
         android:text="Signup Page"
         android:textStyle="bold"
         android:textColor="#0CD2EC"
@@ -32,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="29dp"
         android:layout_marginLeft="29dp"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Enter Email ID"
         android:inputType="textEmailAddress" />
@@ -47,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="29dp"
         android:layout_marginLeft="29dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Enter the Password"
         android:inputType="textPassword" />
@@ -59,33 +60,38 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="273dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="260dp"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
         android:text="Sign Up" />
-
-    <TextView
-        android:id="@+id/LoginNavText"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="75dp"
-        android:layout_marginLeft="75dp"
-        android:text="Already have an account ?"
-        android:textColor="#6A6666"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:id="@+id/LoginNavText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="75dp"
+            android:layout_marginLeft="75dp"
+            android:text="Already have an account ?"
+            android:textColor="#6A6666"/>
 
-    <TextView
-        android:id="@+id/LoginNavBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="107dp"
-        android:layout_marginRight="107dp"
-        android:text="Login"
-        android:textColor="#49C5FD" />
+        <TextView
+            android:id="@+id/LoginNavBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:text="Login"
+            android:textColor="#49C5FD" />
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
