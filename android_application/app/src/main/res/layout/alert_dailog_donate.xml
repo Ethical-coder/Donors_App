@@ -7,8 +7,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:paddingTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3"
+        android:layout_height="wrap_content"
         android:text="Please Enter Details Below"
         android:textSize="24sp"
         android:gravity="center"
@@ -19,9 +18,8 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:id="@+id/alert_et_BG"
-        android:layout_weight="0.3"
         android:gravity="center"
         android:layout_marginVertical="4dp"
         android:layout_marginHorizontal="16dp"
@@ -32,9 +30,8 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:id="@+id/alert_et_CITY"
-        android:layout_weight="0.3"
         android:hint="City"
         android:layout_marginVertical="4dp"
         android:layout_marginHorizontal="16dp"
@@ -45,12 +42,11 @@
     <com.google.android.material.checkbox.MaterialCheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"
         android:id="@+id/alert_cb"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="20dp"
         android:singleLine="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:textSize="20dp"
-        android:text="Generic disclaimer"/>
+        android:text="   Generic disclaimer"/>
 
 </LinearLayout>
