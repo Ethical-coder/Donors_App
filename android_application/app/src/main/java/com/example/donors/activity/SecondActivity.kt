@@ -13,6 +13,8 @@ import com.example.donors.R
 import com.example.donors.constant.BEDS
 import com.example.donors.constant.OXYGEN
 import com.example.donors.constant.PLASMA
+import com.example.donors.data.CurrentUserInfo
+import com.example.donors.data.PlasmaData
 import com.example.donors.databinding.ActivitySecondBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_second.*
@@ -81,7 +83,10 @@ class SecondActivity : AppCompatActivity() {
 	}
 
 	private fun submitDetails(type: String ,bloodGroup: String, city: String) {
-		TODO("Implement post request")
+		val number = "NOT_DEFINED"
+		val plasmaData = PlasmaData( number , type , city )
+
+		Toast.makeText(this , plasmaData.get().toString() , Toast.LENGTH_LONG).show()
 	}
 
 	private fun searchDetails(type : String ,bloodGroup: String?, city: String){

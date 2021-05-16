@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.donors.activity.SecondActivity
 import com.example.donors.adapter.ActivityMainRVAdapter
 import com.example.donors.constant.DATA_RV_MAIN
-import com.example.donors.constant.userInfo
 import com.example.donors.databinding.ActivityMainBinding
 import com.example.donors.library.RecyclerItemClickListenr
 import kotlinx.android.synthetic.main.activity_main.*
