@@ -7,18 +7,25 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.donors.R
+import com.example.donors.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class SignupActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivitySignupBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
 
-        val email = findViewById<TextView>(R.id.RegEmail)
-        val pswd = findViewById<TextView>(R.id.RegPwd)
-        val reg = findViewById<Button>(R.id.RegBtn)
-        val login = findViewById<TextView>(R.id.LoginNavBtn)
+        binding = ActivitySignupBinding.inflate( layoutInflater )
+
+        setContentView( binding.root )
+
+        val email = binding.RegEmail
+        val pswd = binding.RegPwd
+        val reg = binding.RegBtn
+        val login = binding.LoginNavBtn
 
         reg.setOnClickListener {
             when{

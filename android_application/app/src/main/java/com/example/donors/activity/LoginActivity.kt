@@ -10,17 +10,24 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.donors.MainActivity
 import com.example.donors.R
+import com.example.donors.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
-        val email = findViewById<EditText>(R.id.LoginEmail)
-        val pswd = findViewById<EditText>(R.id.LoginPassowrd)
-        val button = findViewById<Button>(R.id.LoginBtn)
+    lateinit var binding: ActivityLoginBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+
+        super.onCreate(savedInstanceState)
+        setContentView( binding.root )
+
+        val email = binding.LoginEmail
+        val pswd = binding.LoginPassowrd
+        val button = binding.LoginBtn
         button.setOnClickListener {
             when {
                 TextUtils.isEmpty(email.text.toString().trim { it <= ' ' }) -> {
@@ -53,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            val reg = findViewById<TextView>(R.id.RegisterNavBtn)
+            val reg = binding.RegisterNavBtn
             reg.setOnClickListener {
                 val intent = Intent(this, SignupActivity::class.java)
                 startActivity(intent)

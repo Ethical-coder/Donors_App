@@ -10,22 +10,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.donors.activity.SecondActivity
 import com.example.donors.adapter.ActivityMainRVAdapter
 import com.example.donors.constant.DATA_RV_MAIN
+import com.example.donors.databinding.ActivityMainBinding
 import com.example.donors.library.RecyclerItemClickListenr
 import kotlinx.android.synthetic.main.activity_main.*
 
 lateinit var adapter: ActivityMainRVAdapter
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        main_rv_main.layoutManager = LinearLayoutManager( this )
+        binding = ActivityMainBinding.inflate( layoutInflater )
+
+        setContentView( binding.root )
+
+        binding.mainRvMain.layoutManager = LinearLayoutManager( this )
         adapter = ActivityMainRVAdapter()
-        main_rv_main.adapter = adapter
+        binding.mainRvMain.adapter = adapter
         adapter.set( DATA_RV_MAIN )
 
-        main_rv_main.addOnItemTouchListener(
+        binding.mainRvMain.addOnItemTouchListener(
             RecyclerItemClickListenr(
                 this ,
                 main_rv_main ,
