@@ -88,11 +88,13 @@ class SecondActivity : AppCompatActivity() {
 		val number = "NOT_DEFINED"
 		val plasmaData = PlasmaData( number , bloodGroup , city )
 		//Firebase data add
-		/*val db:FirebaseDatabase= FirebaseDatabase.getInstance()
-		val root=db.getReference();
-		root.child("Plasma").child(CurrentUserInfo.getUID()).setValue(plasmaData);*/
+		val db:FirebaseDatabase= FirebaseDatabase.getInstance("https://donors-fc754-default-rtdb.firebaseio.com/")
+		val root=db.getReference("Plasma");
+		root.child(CurrentUserInfo.getUID()).child("email").setValue(plasmaData.getEmail());
+		root.child(CurrentUserInfo.getUID()).child("number").setValue(plasmaData.getNumber());
+		root.child(CurrentUserInfo.getUID()).child("locale").setValue(plasmaData.getLocale());
+		root.child(CurrentUserInfo.getUID()).child("blood").setValue(plasmaData.getBlood());
 		// end
-		Toast.makeText(this , plasmaData.get().toString() , Toast.LENGTH_LONG).show()
 	}
 
 	private fun searchDetails(type : String ,bloodGroup: String?, city: String){
