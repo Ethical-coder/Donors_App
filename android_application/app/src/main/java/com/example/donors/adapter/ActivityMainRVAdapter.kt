@@ -1,21 +1,22 @@
 package com.example.donors.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.donors.R
+import com.example.donors.databinding.ActivityMainRvMainBinding
 import kotlinx.android.synthetic.main.activity_main_rv_main.view.*
 
 class ActivityMainRVAdapter : RecyclerView.Adapter< ActivityMainRVAdapter.MainViewHolder >( ) {
 
+	lateinit var binding : ActivityMainRvMainBinding
 	lateinit var  data : List<String>
 
-	inner class MainViewHolder( itemView: View) : RecyclerView.ViewHolder( itemView )
+	inner class MainViewHolder( private val binding: ActivityMainRvMainBinding) : RecyclerView.ViewHolder( binding.root )
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-		val view : View = LayoutInflater.from( parent.context ).inflate( R.layout.activity_main_rv_main , parent , false)
-		return MainViewHolder( view )
+		binding = ActivityMainRvMainBinding.inflate( LayoutInflater.from( parent.context ) , parent , false )
+		return MainViewHolder( binding )
+
 	}
 
 	override fun onBindViewHolder(holder: MainViewHolder, position: Int) {

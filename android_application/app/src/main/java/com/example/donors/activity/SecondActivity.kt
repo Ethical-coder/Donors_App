@@ -5,6 +5,7 @@ import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
@@ -16,6 +17,7 @@ import com.example.donors.constant.PLASMA
 import com.example.donors.data.CurrentUserInfo
 import com.example.donors.data.PlasmaData
 import com.example.donors.databinding.ActivitySecondBinding
+import com.example.donors.databinding.AlertDailogDonateBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_second.*
 
@@ -58,7 +60,6 @@ class SecondActivity : AppCompatActivity() {
 		}
 
 		binding.secondCwQuery.setOnClickListener {
-
 			val dialogLayout = layoutInflater.inflate( R.layout.alert_dailog_donate , null )
 			val bloodGroup = dialogLayout.findViewById<EditText>(R.id.alert_et_BG)
 			val city = dialogLayout.findViewById<EditText>(R.id.alert_et_CITY)
