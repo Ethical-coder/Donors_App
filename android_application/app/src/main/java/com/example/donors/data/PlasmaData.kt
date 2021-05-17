@@ -8,7 +8,6 @@ class PlasmaData( _number : String , _blood : String , _locale :String ){
     private var number : String
     private var blood : String
     private var locale : String
-    private val uid : String = CurrentUserInfo.getUID()
 
     init{
         number = _number
@@ -16,8 +15,7 @@ class PlasmaData( _number : String , _blood : String , _locale :String ){
         locale = _locale
     }
 
-    @JvmName("get")
-    fun get() : MutableList<String> = mutableListOf<String>( uid , email , number , blood , locale )
+    fun get() : MutableList<String> = mutableListOf<String>( email , number , blood , locale )
 
     @JvmName("set")
     fun set( _number : String , _blood : String , _locale: String ){
@@ -45,7 +43,5 @@ class PlasmaData( _number : String , _blood : String , _locale :String ){
     fun getLocale():String = this.locale
 
     fun getBlood():String = this.blood
-
-    fun getUid():String = this.uid
 
 }
