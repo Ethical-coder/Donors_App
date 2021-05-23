@@ -1,6 +1,9 @@
 package com.example.donors.activity
 
+import android.app.DownloadManager
+import android.app.VoiceInteractor
 import android.content.Intent
+import android.hardware.usb.UsbEndpoint
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +13,11 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.donors.R
 import com.example.donors.constant.BEDS
 import com.example.donors.constant.OXYGEN
@@ -18,9 +26,11 @@ import com.example.donors.data.CurrentUserInfo
 import com.example.donors.data.PlasmaData
 import com.example.donors.databinding.ActivitySecondBinding
 import com.example.donors.databinding.AlertDailogDonateBinding
+import com.example.donors.library.postDataUsingVolley
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_second.*
+import org.json.JSONObject
 
 class SecondActivity : AppCompatActivity() {
 
@@ -88,14 +98,20 @@ class SecondActivity : AppCompatActivity() {
 		val number = "NOT_DEFINED"
 		val plasmaData = PlasmaData( number , bloodGroup , city )
 		//Firebase data add
-		val db:FirebaseDatabase= FirebaseDatabase.getInstance("https://donors-fc754-default-rtdb.firebaseio.com/")
+		/*val db:FirebaseDatabase= FirebaseDatabase.getInstance("https://donors-fc754-default-rtdb.firebaseio.com/")
 		val root=db.getReference("Plasma");
 		root.child(CurrentUserInfo.getUID()).child("email").setValue(plasmaData.getEmail());
 		root.child(CurrentUserInfo.getUID()).child("number").setValue(plasmaData.getNumber());
 		root.child(CurrentUserInfo.getUID()).child("locale").setValue(plasmaData.getLocale());
 		root.child(CurrentUserInfo.getUID()).child("blood").setValue(plasmaData.getBlood());
-		// end
+		// end*/
+		val postdata: postDataUsingVolley= postDataUsingVolley();
+		postdata.postDataUsingVolley(this,CurrentUserInfo.getUID(),plasmaData.getEmail(),plasmaData.getNumber(),plasmaData.getLocale(),plasmaData.getBlood());
+
+
 	}
+
+
 
 	private fun searchDetails(type : String ,bloodGroup: String?, city: String){
 		Intent( this@SecondActivity , ResultActivity::class.java ).apply {
