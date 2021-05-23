@@ -3,8 +3,7 @@ from flask_mysqldb import MySQL
 from flask import jsonify
 import numpy as np
 import haversine as hs
-
-
+from geopy import Nominatim as n
 
 app = Flask(__name__)
 app.secret_key='some secret key'
@@ -22,21 +21,34 @@ mysql =  MySQL(app)
 
 @app.route('/donate', methods=['POST'])
 def donate():
-    print(request.form["idDonor"])
-    if request.method == 'POST':
-        idDonor = request.get_json["idDonor"]
-        address = request.get_json["address"]
-        bloodGroup = request.get_json["bloodGroup"]
-        latitude=request.get_json['latitude']
-        longitude=request.get_json['latitude']
-        disease = request.get_json['disease']
     
+    if request.method == 'POST':
+        posted_data = request.get_json()
         
+        latitude=0
+        longitude=0
+        locator=n(user_agent="myGeocoder")
+        while(True):
+            try:    
+                location=locator.geocode(posted_data["address"])
+                latitude=location.latitude
+                longitude=location.longitude
+                break
+            except:
+                continue
+   
+        
+        idDonor = posted_data["idDonor"]
+        address = posted_data["address"]
+        bloodGroup = posted_data["bloodGroup"]
+        disease = posted_data['disease']
+    
         #create a cursor
         cur = mysql.connection.cursor()
-
+        query="INSERT INTO donor(idDonor,Address,BloodGroup,Latitude,Longitude,Disease) VALUES(\'{one}\',\'{two}\',\'{three}\',{four},{five},\'{six}\')".format(one=idDonor, two=address, three=bloodGroup,four=latitude,five=longitude,six=disease)
+        print(query)
         #Inserting values into tables
-        cur.execute("INSERT INTO donor('idDonor','Address','BloodGroup','Latitude','Longitude','Disease') VALUES(%s, %s, %s,%s, %s,%s)" ,(idDonor, address, bloodGroup,latitude,longitude,disease))
+        cur.execute(query)
        
         #Commit to DB
         mysql.connection.commit()
@@ -52,7 +64,7 @@ def donate():
 def plasma_request():
     if(request.method == 'GET'):
         blood_group = request.args.get('group', type=str)
-        print(blood_group)
+        
         latitude = request.args.get('lat', type=float)
         longitude = request.args.get('long', type=float)
         query = "Select * from donor where BloodGroup=\'{group}\';".format(group=blood_group)
@@ -60,6 +72,7 @@ def plasma_request():
         cur = mysql.connection.cursor()
         cur.execute(query)
         result = cur.fetchall()
+        print(result)
         cur.close()
         
         if len(result)>0:
@@ -95,6 +108,33 @@ def haversine_distance(lat1, lon1, lat2, lon2):
 #    res = r * (2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a)))
 #    return np.round(res, 2)
 
+@app.route('/beds', methods = ['GET'])
+def bed_availability():
+    city = request.args.get('city', type=str)
+    query = "Select * from beds where city=\'{city}\';".format(city=city)
+    print(query)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    result = cur.fetchall()
+    print(result)
+    cur.close()
+    
+    return jsonify({'data':result})
+ 
+@app.route('/oxygenSupplies', methods = ['GET'])
+def oxygen_availability():
+    city = request.args.get('city', type=str)
+    query = "Select * from oxygen where city=\'{city}\';".format(city=city)
+    print(query)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    result = cur.fetchall()
+    print(result)
+    cur.close()
+    
+    return jsonify({'data':result})   
+ 
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
