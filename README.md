@@ -60,7 +60,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Contributing
 - #### Maintainers
-	-  [Aayush](https://github.com/Ethical-coder)
+	-  [Ayush](https://github.com/Ethical-coder)
 	- [Anshul](https://github.com/sarafanshul)
 	- [Malay]()
 	- [Pratya](https://github.com/pratyaa)
