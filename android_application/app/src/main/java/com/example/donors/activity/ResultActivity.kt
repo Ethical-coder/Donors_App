@@ -4,16 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.donors.R
 import com.example.donors.adapter.RecyclerViewResultAdapter
+import com.example.donors.data.PlasmaData
 import com.example.donors.databinding.ActivityResultBinding
 import com.example.donors.library.StatesRecyclerViewAdapter
 import com.example.donors.library.EndlessRecyclerViewScrollListener
 import com.example.donors.library.RecyclerItemClickListenr
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import kotlinx.coroutines.*
 
 
@@ -83,15 +87,15 @@ class ResultActivity : AppCompatActivity() {
 
 	private fun addDataToAdapter( data : MutableList<String> ){
 		adapter.add( data )
-		if( adapter.itemCount != 0 )
-			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_NORMAL
-		else
-			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_EMPTY
+		//if( adapter.itemCount != 0 )
+			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_NORMAL;
+		/*else
+			statesRecyclerViewAdapter.state = StatesRecyclerViewAdapter.STATE_EMPTY*/
 	}
 
 	private fun loadNextDataFromAPI(page: Int, totalItemsCount: Int , type: String , bloodGroup: String, city: String) {
 		addDataToAdapter( getDataFromAPI( type, bloodGroup, city ) )
-		Toast.makeText(this ,"new content added !" , Toast.LENGTH_LONG).show()
+		//Toast.makeText(this ,"new content added !" , Toast.LENGTH_LONG).show()
 	}
 
 	private fun loadNextData( page: Int, totalItemsCount: Int , type : String , bloodGroup: String, city: String){
@@ -103,8 +107,31 @@ class ResultActivity : AppCompatActivity() {
 
 	private fun getDataFromAPI(type: String, bloodGroup: String, city: String): MutableList<String> {
 		// Do magic here
-		val data = IntRange(1 , 10).map { it.toString() }.toMutableList()
-		if( data.isEmpty() ) canLoadMore = false
-		return data
+		var firebase:FirebaseDatabase= FirebaseDatabase.getInstance("https://donors-fc754-default-rtdb.firebaseio.com/");
+		var data=mutableListOf<String>() ;
+		var ref:DatabaseReference=firebase.getReference("Plasma");
+		ref.addValueEventListener(object:ValueEventListener{
+			override fun onDataChange(snapshot: DataSnapshot) {
+
+				for (snap in snapshot.children){
+					var value=snap.getValue() as Map<String,String>;
+					var temp:String="";
+					temp+="Email : "+value.get("email").toString()+"\n";
+					temp+="Blood Group : "+value.get("blood").toString()+"\n";
+					temp+="City : "+value.get("locale").toString();
+					Log.d("datatemp",temp);
+					adapter.add(mutableListOf(temp));
+				}
+			}
+
+			override fun onCancelled(error: DatabaseError) {
+			}
+
+		})
+		//val data = IntRange(1 , 10).map { it.toString() }.toMutableList()
+		//if( data.isEmpty() )
+		Log.d("datasnap",data.toString());
+		canLoadMore = false;
+		return data;
 	}
 }
