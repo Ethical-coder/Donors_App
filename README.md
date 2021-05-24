@@ -55,7 +55,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [v1.2.01](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-[Mirror](bit.ly/IqT6zt)
+[Mirror](https://bit.ly/IqT6zt)
 
 
 ## Contributing
