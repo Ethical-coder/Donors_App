@@ -13,33 +13,33 @@ API host - Heroku
 ## Layout
 <details><summary>Login Page</summary>
 
-		![](/assets/images/login.png)
+![](/assets/images/login.png)
 
-	</details>
+</details>
 
 <details><summary>Main Screen</summary>
 
-		![](/assets/images/main.png)
+![](/assets/images/main.png)
 
-	</details>
+</details>
 
 <details><summary>Search</summary>
 
-		![](/assets/images/search.png)
+![](/assets/images/search.png)
 
-	</details>
+</details>
 
 <details><summary>Results</summary>
 
-		![](/assets/images/result.png)
+![](/assets/images/result.png)
 
-	</details>
+</details>
 
 <details><summary>Database Layout</summary>
 
-		![](/assets/images/db.png)
+![](/assets/images/db.png)
 
-	</details>
+</details>
 
 ### License
 ```
